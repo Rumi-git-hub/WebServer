@@ -18,6 +18,15 @@ app.post('/add',async(req,res)=>{
     await User.create({login,password})
     res.send(`user was created`)
 })
+app.delete('/:id',async(req,res)=>{
+    const {id} = req.params
+    const candidate = await User.findByPk(id)
+    if(!candidate){
+        res.send('Error')
+    }
+    await candidate.destroy()
+    res.send(`user was destroyed`)
+})
 async function start(){
     try {
         await sequelize.authenticate();
